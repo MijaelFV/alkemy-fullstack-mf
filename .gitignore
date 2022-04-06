@@ -1,4 +1,4 @@
-# misc
+# temporal
 /server/middlewares/__src
 /server/routes/__src
 /server/models
@@ -7,10 +7,9 @@
 /server/helpers/generate-jwt.js
 /server/controllers
 /server/routes
-/server/.env.template
 
 # server
-/server/postgres_data
+/server/mariadb_data
 /server/node_modules
 /server/.env
 
