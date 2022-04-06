@@ -1,12 +1,25 @@
 services:
-  entriesdb:
-    image: postgres
-    container_name: alkemy-database
-    ports:
-      - '5432:5432'
-    volumes:
-      - './postgres_data:/var/lib/postgresql/data'
+# alkemydb:
+#   image: postgres
+#   container_name: alkemy-database
+#   ports:
+#     - '5432:5432'
+#   volumes:
+#     - './postgres_data:/var/lib/postgresql/data'
+#   environment:
+#     POSTGRES_DB: alkemydb
+#     POSTGRES_USER: alkemyuser
+#     POSTGRES_PASSWORD: alkemy
+
+  alkemydb:
+    image: mariadb
+    container_name: alkemy-db
     environment:
-      POSTGRES_DB: alkemydb
-      POSTGRES_USER: alkemyuser
-      POSTGRES_PASSWORD: alkemy
+      MARIADB_DATABASE: 'challengedb'
+      MARIADB_USER: 'alkemyuser'
+      MARIADB_PASSWORD: 'alkemy'
+      MARIADB_ROOT_PASSWORD: 'alkemyroot'
+    ports:
+      - '3306:3306'
+    volumes:
+      - './mariadb_data:/var/lib/mysql'
