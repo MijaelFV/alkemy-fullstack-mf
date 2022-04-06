@@ -4,7 +4,6 @@ const path = require('path')
 const { db } = require('./database/config');
 const { readDir } = require('./helpers/handle-routes');
 
-
 class Server {
   constructor() {
     this.app = express()

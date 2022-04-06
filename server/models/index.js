@@ -1,4 +1,16 @@
+const User = require('./user_model')
+const Entry = require('./entry_model')
+
+// Create asociations
+User.hasMany(Entry)
+Entry.belongsTo(User);
+//
+
+// Force database sync
+// User.sync({force: true})
+// Entry.sync({force: true})
+
 module.exports = {
-  Entry: require('./entry_model'),
-  User: require('./user_model')
+  User,
+  Entry
 };

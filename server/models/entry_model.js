@@ -7,7 +7,7 @@ const Entry = db.define('Entry', {
     allowNull: false,
   },
   amount: {
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
   type: {
@@ -19,7 +19,5 @@ const Entry = db.define('Entry', {
     allowNull: false,
   },
 });
-
-Entry.sync()
 
 module.exports = Entry

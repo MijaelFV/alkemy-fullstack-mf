@@ -1,11 +1,6 @@
 # temporal
-/server/controllers/__src
-/server/routes/__src
-/server/middlewares
 /server/helpers/db-validators.js
 /server/helpers/generate-jwt.js
-/server/controllers/entry_controller.js
-/server/routes/entry_route.js
 
 # server
 /server/mariadb_data
