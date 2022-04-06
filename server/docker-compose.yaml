@@ -1,0 +1,12 @@
+services:
+  entriesdb:
+    image: postgres
+    container_name: alkemy-database
+    ports:
+      - '5432:5432'
+    volumes:
+      - './postgres_data:/var/lib/postgresql/data'
+    environment:
+      POSTGRES_DB: alkemydb
+      POSTGRES_USER: alkemyuser
+      POSTGRES_PASSWORD: alkemy
