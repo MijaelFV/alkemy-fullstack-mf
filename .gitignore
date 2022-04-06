@@ -1,14 +1,12 @@
 # misc
 /server/middlewares/__src
 /server/routes/__src
-
 /server/models
 /server/middlewares
-/server/helpers
+/server/helpers/db-validators.js
+/server/helpers/generate-jwt.js
 /server/controllers
 /server/routes
-/server/database
-/server/server.js
 /server/.env.template
 
 # server
