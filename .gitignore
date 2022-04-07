@@ -1,7 +1,3 @@
-# temporal
-/server/helpers/db-validators.js
-/server/helpers/generate-jwt.js
-
 # server
 /server/mariadb_data
 /server/node_modules
