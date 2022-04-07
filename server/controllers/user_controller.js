@@ -1,16 +1,12 @@
 const { User } = require('../models');
 const bcryptjs = require('bcryptjs');
+const { generateJWT } = require("../helpers/generate-jwt");
 
 const getUser = async( req , res ) => {
   const { id } = req.params;
 
   try {
     const user = await User.findByPk( id );
-    if ( !user ) {
-      res.status(404).json({
-        msg: `The user does not exist ${ id }`
-      });
-    }
   
     res.status(200).json(user);
   } catch (error) {
@@ -27,18 +23,6 @@ const postUser = async( req , res ) => {
   email = email.toLowerCase();
   
   try {
-    // Check if there is a user using this email
-    // const emailExists = await User.findOne({
-    //     where: {
-    //         email: body.email
-    //     }
-    // });
-    // if (emailExists) {
-    //     return res.status(400).json({
-    //         msg: `This email is already in use ${email}`
-    //     });
-    // };
-    
     // Encrypt password
     const salt = bcryptjs.genSaltSync();
     password = bcryptjs.hashSync(password, salt);
@@ -47,7 +31,10 @@ const postUser = async( req , res ) => {
 
     await user.save();
 
-    res.status(201).json( user );
+    // JsonWebToken
+    const token = await generateJWT(user.id, user.name);
+
+    res.status(201).json({user, token});
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -60,21 +47,16 @@ const putUser = async( req , res ) => {
   const { id }   = req.params;
   let { name, email, password } = req.body;
   
-  if (email) {
-    email = email.toLowerCase();
-  }
-  
   try {
+    const user = await User.findByPk( id );
+
+    if (email) {
+      email = email.toLowerCase();
+    }
+    
     if (password)  {
       const salt = bcryptjs.genSaltSync();
       password = bcryptjs.hashSync(password, salt)
-    }
-
-    const user = await User.findByPk( id );
-    if ( !user ) {
-        return res.status(404).json({
-            msg: `The user does not exist ${ id }`
-        });
     }
 
     const data = {
@@ -84,7 +66,6 @@ const putUser = async( req , res ) => {
     }
 
     await user.update(data);
-    
     res.status(200).json( user );
   } catch (error) {
     console.log(error);
@@ -99,11 +80,6 @@ const deleteUser = async( req , res ) => {
 
   try {
     const user = await User.findByPk( id );
-    if ( !user ) {
-      return res.status(404).json({
-        msg: `The user does not exist ${ id }`
-      });
-    }
 
     await user.destroy();
     res.status(200).json(user);
