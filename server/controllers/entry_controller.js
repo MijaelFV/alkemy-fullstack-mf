@@ -39,7 +39,7 @@ const postEntry = async( req , res ) => {
   const { concept, amount, type, category } = req.body;
 
   try {
-    const entry = Entry.build({concept, amount, type, category, userId: id});
+    const entry = Entry.build({concept, amount, type, categoryId: category, userId: id});
     await entry.save();
     
     res.status(201).json( entry );
@@ -61,7 +61,7 @@ const putEntry = async( req , res ) => {
     const data = {
       concept: concept || entry.concept,
       amount: amount || entry.amount,
-      category: category || entry.category
+      categoryId: category || entry.categoryId
     }
 
     await entry.update(data);
