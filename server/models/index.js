@@ -21,5 +21,6 @@ Entry.belongsTo(Category, {foreignKey: {name: 'categoryId'}});
 
 module.exports = {
   User,
-  Entry
+  Entry,
+  Category
 };
