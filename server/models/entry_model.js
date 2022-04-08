@@ -13,11 +13,7 @@ const Entry = db.define('Entry', {
   type: {
     type: DataTypes.STRING,
     allowNull: false,
-  },
-  category: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
+  }
 });
 
 module.exports = Entry
