@@ -1,4 +1,4 @@
-const { User } = require("../models");
+const { User, Entry } = require("../models");
 
 const isEmailAvailable = async(email = '') => {
     const user = await User.findOne({
@@ -16,6 +16,14 @@ const userExists = async(id = '') => {
   const user = await User.findByPk( id );
   if (!user) {
       throw new Error(`User does not exist`);
+  }
+};
+
+const entryExists = async(id = '') => {
+  const entry = await Entry.findByPk( id );
+
+  if (!entry) {
+      throw new Error(`Entry does not exist`);
   }
 };
 
@@ -40,7 +48,11 @@ const isPasswordValid = ({password, password2}) => {
 }
 
 const emailExists = async(email = '') => {
-    const user = await User.findOne({email});
+    const user = await User.findOne({
+        where: {
+            email
+        }
+    });
     if (!user) {
         throw new Error(`The email entered does not belong to a user`)
     }
@@ -50,5 +62,6 @@ module.exports = {
     isEmailAvailable,
     isPasswordValid,
     userExists,
-    emailExists
+    emailExists,
+    entryExists
 };
