@@ -11,9 +11,9 @@ const validateJWT = async(req, res, next) => {
   }
 
   try {
-    const { uid } = jwt.verify(token, process.env.SECRET_KEY || 's3cr37k3yof4lk3mych4ll3ng3');
+    const { id } = jwt.verify(token, process.env.SECRET_KEY || 's3cr37k3yof4lk3mych4ll3ng3');
 
-    const user = await User.findByPk(uid)
+    const user = await User.findByPk(id)
     if (!user) {
         return res.status(401).json({ 
             msg: 'Invalid token - user does not exist'
