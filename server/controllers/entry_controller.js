@@ -1,8 +1,14 @@
 const { Entry } = require("../models");
 
 const getAllEntries = async( req , res ) => {
+  const { id } = req.user
+
   try {
-    const entries = await Entry.findAll();
+    const entries = await Entry.findAll({
+      where: {
+        userId: id
+      }
+    });
 
     res.status(200).json(entries);
   } catch (error) {
@@ -18,11 +24,6 @@ const getEntry = async( req , res ) => {
 
   try {
     const entry = await Entry.findByPk( id );
-    if ( entry ) {
-      res.status(404).json({
-          msg: `The entry does not exist - ${ id }`
-      });
-    }
 
     res.status(200).json(entry);
   } catch (error) {
@@ -34,10 +35,11 @@ const getEntry = async( req , res ) => {
 }
 
 const postEntry = async( req , res ) => {
+  const { id } = req.user
   const { concept, amount, type, category } = req.body;
 
   try {
-    const entry = Entry.build({concept, amount, type, category});
+    const entry = Entry.build({concept, amount, type, category, userId: id});
     await entry.save();
     
     res.status(201).json( entry );
@@ -55,11 +57,6 @@ const putEntry = async( req , res ) => {
 
   try {
     const entry = await Entry.findByPk( id );
-    if ( !entry ) {
-        return res.status(404).json({
-            msg: `The entry does not exist - ${ id }`
-        });
-    }
 
     const data = {
       concept: concept || entry.concept,
@@ -82,11 +79,6 @@ const deleteEntry = async( req , res ) => {
 
   try {
     const entry = await Entry.findByPk( id );
-    if ( !entry ) {
-      return res.status(404).json({
-        msg: `The entry does not exist ${ id }`
-      });
-    }
 
     await entry.destroy();
     res.status(200).json(entry);
