@@ -28,12 +28,8 @@ class Server {
     }
   }
 
-  /*
-    Load express routes automatically.
-    The files must be in the routes folder
-    and must end with "_route". 
-  */
   async apiRoutes() {
+    // This handles the automatic creation of routes by taking files ending with "_route" in the routes folder
     const _route = '/api'
     const _path = path.join(__dirname,'routes');
     const _replace = '_route';
