@@ -1,6 +1,6 @@
 module.exports = {
   validateFields: require('./validate-fields'),
   validateJwt: require('./validate-jwt'),
-  validateUserOwn: require('./validate-user'),
-  validateEntryOwn: require('./validate-entry'),
+  validateUser: require('./validate-user'),
+  validateEntry: require('./validate-entry')
 };

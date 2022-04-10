@@ -1,12 +1,18 @@
 const { Entry } = require('../models')
 
-const validateEntryOwn = async(req, res, next) => {
+const validateEntry = async(req, res, next) => {
   const entryId = req.params.id;
   const {id: userId} = req.user;
 
   const entry = await Entry.findByPk(entryId)
 
-  if (entry?.userId !== userId) {
+  if (!entry) {
+    return res.status(404).json({
+      msg: 'Entry does not exist'
+    })
+  }
+
+  if (entry.userId !== userId) {
     return res.status(401).json({
         msg: 'You are not allowed'
     })
@@ -15,4 +21,4 @@ const validateEntryOwn = async(req, res, next) => {
   next();
 }
 
-module.exports = validateEntryOwn
+module.exports = validateEntry
