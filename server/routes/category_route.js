@@ -1,27 +1,30 @@
 const { Router } = require('express');
+const { check } = require("express-validator");
 const { categoryController } = require("../controllers");
-const { validateJwt, validateFields } = require("../middlewares");
+const { validateJwt, validateFields, validateCategory } = require("../middlewares");
 
 const router = Router();
 
 router.get('/',[
   validateJwt,
-  validateFields
 ], categoryController.getAllCategories);
 
 router.put('/:id',[
   validateJwt,
+  validateCategory,
+  check('name', 'Name is required').not().isEmpty(),
   validateFields
 ], categoryController.putCategory);
 
 router.post('/',[
   validateJwt,
+  check('name', 'Name is required').not().isEmpty(),
   validateFields
 ], categoryController.postCategory);
 
 router.delete('/:id',[
   validateJwt,
-  validateFields
+  validateCategory,
 ], categoryController.deleteCategory);
 
 module.exports = router;

@@ -1,30 +1,22 @@
 const { Router } = require('express');
 const { check } = require("express-validator");
 const { entryController } = require("../controllers");
-const { entryExists } = require("../helpers/db-validators");
-const { validateJwt, validateFields, validateEntryOwn } = require("../middlewares");
+const { validateJwt, validateFields, validateEntry } = require("../middlewares");
 
 const router = Router();
 
 router.get('/',[
   validateJwt,
-  validateFields
 ], entryController.getAllEntries);
 
 router.get('/:id',[
   validateJwt,
-  check('id')
-    .custom(entryExists),
-  validateEntryOwn,
-  validateFields
+  validateEntry,
 ], entryController.getEntry);
 
 router.put('/:id',[
   validateJwt,
-  check('id')
-    .custom(entryExists),
-  validateEntryOwn,
-  validateFields
+  validateEntry,
 ], entryController.putEntry);
 
 router.post('/',[
@@ -45,10 +37,7 @@ router.post('/',[
 
 router.delete('/:id',[
   validateJwt,
-  check('id')
-    .custom(entryExists),
-  validateEntryOwn,
-  validateFields
+  validateEntry,
 ], entryController.deleteEntry);
 
 module.exports = router;
