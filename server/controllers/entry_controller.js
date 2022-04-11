@@ -1,10 +1,11 @@
 const { Entry } = require("../models");
 
-const getAllEntries = async( req , res ) => {
+const getEntries = async( req , res ) => {
   const { id } = req.user
 
   try {
     const entries = await Entry.findAll({
+      limit: 10,
       where: {
         userId: id
       }
@@ -91,7 +92,7 @@ const deleteEntry = async( req , res ) => {
 }
 
 module.exports = {
-  getAllEntries,
+  getEntries,
   getEntry,
   putEntry,
   postEntry,

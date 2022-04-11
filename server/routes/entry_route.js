@@ -7,7 +7,7 @@ const router = Router();
 
 router.get('/',[
   validateJwt,
-], entryController.getAllEntries);
+], entryController.getEntries);
 
 router.get('/:id',[
   validateJwt,
