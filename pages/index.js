@@ -1,17 +1,8 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import { MainLayout } from "../components/layouts/MainLayout";
 
-export default function Home() {
+export default function Home({entries}) {
   return (
-    <div>
-      <Head>
-      </Head>
-
-      <main>
-      </main>
-
-      <footer>
-      </footer>
-    </div>
+    <MainLayout title='Balance'>
+    </MainLayout>
   )
 }
