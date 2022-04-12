@@ -19,11 +19,11 @@ export const EntryCard = ({entry}) => {
           }
           <Box sx={{display: 'flex', flexDirection:"column", flex: '1 0 auto'}}>
               <Typography fontWeight={500}>{entry.concept}</Typography>
-              <Typography variant="subtitle2" fontWeight={500} color="gray">{entry.category}</Typography>
+              <Typography variant="subtitle2" fontWeight={500} color="gray">{entry.categoryId}</Typography>
           </Box>
           <Box sx={{display: 'flex', flexDirection:"column", textAlign: 'end'}}>
             <Typography variant="body1" fontWeight={600} color={entry.type === 'expense' ? 'red' : 'green'}>{entry.type === 'expense' ? `-${format(entry.amount)}` : format(entry.amount)}</Typography>
-            <Typography variant="subtitle2" fontWeight={500} color="gray">{entry.date}</Typography>
+            <Typography variant="subtitle2" fontWeight={500} color="gray">{'12 Jan, 2022'}</Typography>
           </Box>
         </CardActionArea>
       </Card>
