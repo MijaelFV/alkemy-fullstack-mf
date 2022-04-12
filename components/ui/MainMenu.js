@@ -19,11 +19,11 @@ export const MainMenu = () => {
     logout()
   }
 
-  // const handleCategoryMenu = () => {
-  //   handleCloseMenu()
-  //   setDrawerForm('category')
-  //   toggleDrawer()
-  // }
+  const handleCategoryMenu = () => {
+    handleCloseMenu()
+    setDrawerForm('category')
+    toggleDrawer()
+  }
 
   return (
     <Menu
@@ -31,12 +31,12 @@ export const MainMenu = () => {
       open={open}
       onClose={handleCloseMenu}
     >
-      {/* <MenuItem onClick={handleCategoryMenu}>
+      <MenuItem onClick={handleCategoryMenu}>
         <ListItemIcon>
           <Category />
         </ListItemIcon>
         <ListItemText>Manage categories</ListItemText>
-      </MenuItem> */}
+      </MenuItem>
       <MenuItem onClick={handleLogout}>
         <ListItemIcon>
           <Logout />

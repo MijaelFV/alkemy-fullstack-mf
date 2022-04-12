@@ -34,13 +34,13 @@ export const Bottombar = () => {
         <Close sx={{height: 30, width: 30}} />
       </IconButton>
       {
-        // drawerForm === "category"
-        // ? <CategoryForm />
-        // : (
+        drawerForm === "category"
+        ? <CategoryForm />
+        : (
           drawerForm !== "none"
           ? <EntryForm />
           : <EntryInfo />  
-        // )
+        )
       }
     </Drawer>
   )
