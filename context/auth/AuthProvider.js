@@ -24,7 +24,7 @@ export const AuthProvider = ({children}) => {
       if (!Cookies.get('token')) return ;
 
       try {
-        const {data} = await financeApi.get('/auth/renew', {withCredentials: true});
+        const {data} = await financeApi.get('/auth/renew');
         const {token, name} = data;
         Cookies.set('token', token);
         dispatch({type: authTypes.authLogin, payload: name});
@@ -36,7 +36,7 @@ export const AuthProvider = ({children}) => {
 
     const loginUser = async(email, password) => {
       try {
-        const {data} = await financeApi.post('/auth/login', {email, password});
+        const {data} = await financeApi.post('/auth/login', {email, password}, {withCredentials: false});
         const {token, name} = data;
         Cookies.set('token', token);
 
@@ -61,7 +61,7 @@ export const AuthProvider = ({children}) => {
 
     const registerUser = async(name, email, password, password2) => {
       try {
-        const {data} = await financeApi.post('/user', {name, email, password, password2});
+        const {data} = await financeApi.post('/user', {name, email, password, password2}, {withCredentials: false});
         console.log(data);
         const {token, user} = data;
         Cookies.set('token', token);
