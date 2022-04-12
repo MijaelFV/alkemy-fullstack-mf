@@ -54,13 +54,5 @@ export const lightTheme = createTheme({
         }
       }
     },
-    MuiListItem: {
-      styleOverrides: {
-        root: {
-          boxShadow: '0px 5px 5px rgba(0,0,0,0.05)',
-          borderRadius: '10px',
-        }
-      }
-    }
   }
 });
