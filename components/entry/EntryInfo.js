@@ -23,7 +23,7 @@ export const EntryInfo = () => {
         <Typography variant="subtitle1" color="gray">{'19 January 2022'}</Typography>
       </Box>
       <List sx={{mt: 1}}>
-        <ListItem sx={{mb: 1}} button onClick={() => setDrawerForm('edit')}>
+        <ListItem sx={{mb: 1, border: 1, borderRadius: 5, borderColor: '#d9d9d9'}} button onClick={() => setDrawerForm('edit')}>
           <ListItemIcon>
             <Edit />
           </ListItemIcon>
@@ -32,7 +32,7 @@ export const EntryInfo = () => {
             <ChevronRight sx={{height: 35, width: 35}} />
           </ListItemSecondaryAction>
         </ListItem>
-        <ListItem button onClick={handleDeleteEntry}>
+        <ListItem sx={{mb: 1, border: 1, borderRadius: 5, borderColor: '#d9d9d9'}} button onClick={handleDeleteEntry}>
           <ListItemIcon>
             <DeleteForever />
           </ListItemIcon>
