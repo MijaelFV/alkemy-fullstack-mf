@@ -3,7 +3,7 @@ import { Box, IconButton, Card, CardContent, Fab, Grid, Typography, MenuItem, Li
 import { format } from "../utils/currency"
 import { EntryList } from "../components/balance/EntryList"
 import { MainLayout } from "../components/layouts/MainLayout";
-// import { Bottombar } from "../components/ui/Bottombar";
+import { Bottombar } from "../components/ui/Bottombar";
 import MenuIcon from '@mui/icons-material/Menu';
 import { useContext } from "react";
 import { MainMenu } from "../components/ui/MainMenu";
@@ -13,10 +13,10 @@ export default function HomePage({entries}) {
 
   const {toggleDrawer, setDrawerForm, toggleMenu} = useContext(UiContext)
 
-  // const handleOpenCreateEntry = () => {
-  //   setDrawerForm('create')
-  //   toggleDrawer()
-  // }
+  const handleOpenCreateEntry = () => {
+    setDrawerForm('create')
+    toggleDrawer()
+  }
 
   const handleOpenMenu = (event) => {
     toggleMenu(event.currentTarget)
@@ -44,10 +44,10 @@ export default function HomePage({entries}) {
             </CardContent>
           </Card>
           <EntryList />
-          {/* <Fab onClick={handleOpenCreateEntry} sx={{position: 'fixed', bottom: 16, right: 16}} color="secondary">
+          <Fab onClick={handleOpenCreateEntry} sx={{position: 'fixed', bottom: 16, right: 16}} color="secondary">
             <AddIcon />
-          </Fab> */}
-          {/* <Bottombar /> */}
+          </Fab>
+          <Bottombar />
         </Grid>
       </Grid>
     </MainLayout>
