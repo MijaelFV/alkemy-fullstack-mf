@@ -1,5 +1,6 @@
 const cors = require('cors');
 const express = require('express')
+const cookieParser = require('cookie-parser');
 const path = require('path')
 const { db } = require('./database/config');
 const { readDir } = require('./helpers/handle-routes');
@@ -46,9 +47,18 @@ class Server {
   middlewares() {
     // Cors
     this.app.use(cors());
+
+    this.app.use((req, res, next) => {
+      res.setHeader('Access-Control-Allow-Origin', process.env.WEB_URL || 'http://localhost:3000');
+      res.setHeader('Access-Control-Allow-Credentials', true);
+      next();
+    })
     
     // Reading and parsing of body
     this.app.use(express.json());
+
+    // Cookie parsing
+    this.app.use(cookieParser())
   }
 
   listen() {

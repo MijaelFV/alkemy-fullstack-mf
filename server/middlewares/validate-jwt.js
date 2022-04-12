@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user_model');
 
 const validateJWT = async(req, res, next) => {
-  const token = req.header('x-token');
+  const { token } = req.cookies;
 
   if (!token) {
     return res.status(401).json({
