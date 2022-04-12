@@ -8,10 +8,33 @@ const getEntries = async( req , res ) => {
       limit: 10,
       where: {
         userId: id
-      }
+      },
+      order: [
+        ['createdAt', 'DESC']
+      ]
     });
+    
+    const expenses = Entry.findAll({
+      attributes: ['amount'],
+      where: {type: "expense"}
+    })
+    let totalExpenses = 0;
+    (await expenses).forEach((item) => {
+      totalExpenses += item.amount
+    })
 
-    res.status(200).json(entries);
+    const incomes = Entry.findAll({
+      attributes: ['amount'],
+      where: {type: "income"}
+    })
+    let totalIncomes = 0;
+    (await incomes).forEach((item) => {
+      totalIncomes += item.amount
+    })
+
+    const balance = totalIncomes - totalExpenses;
+
+    res.status(200).json({entries, balance});
   } catch (error) {
     console.log(error);
     res.status(500).json({
