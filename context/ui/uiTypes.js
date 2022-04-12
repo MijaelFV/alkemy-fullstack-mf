@@ -1,5 +1,5 @@
 export const uiTypes = {
-    // uiToggleEdit: '[UI] Entry editor toggled',
-    // uiToggleDrawer: '[UI] Drawer toggled',
-    // uiToggleCreate: '[UI] Entry creator toggled',
+  uiToggleDrawer: '[UI] Drawer toggled',
+  uiSetDrawerForm: '[UI] Drawer form changed',
+  uiToggleMenu: '[UI] Menu toggled',
 }
