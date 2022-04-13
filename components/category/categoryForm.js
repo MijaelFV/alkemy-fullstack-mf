@@ -4,6 +4,7 @@ import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { EntryContext } from "../../context/entry/EntryContext";
 import { UiContext } from "../../context/ui/UiContext";
+import ErrorSign from "../ui/ErrorSign";
 
 export const CategoryForm = () => {
 
@@ -18,7 +19,6 @@ export const CategoryForm = () => {
 
   const handleAccept = () => {
     toggleDrawer()
-    setDrawerForm('none')
     reset()
   }
 
@@ -84,10 +84,7 @@ export const CategoryForm = () => {
       <Grid container spacing={3}>
         <Grid item xs={12} gap="10px" display="flex" flexDirection="column" alignItems="start">
           <Typography variant="h5">Manage categories</Typography>
-          <Box className="fadeIn" display={showError ? "flex" : "none"} mt={1} gap={1} alignItems="center" padding={1} borderRadius={4} bgcolor="red" color="white">
-            <ErrorOutline />
-            <Typography fontWeight={500} >{errorMessage}</Typography>
-          </Box>
+          <ErrorSign showError={showError} errorMessage={errorMessage} />
         </Grid>
         <Grid item xs={12}>
           <TextField
@@ -164,7 +161,7 @@ export const CategoryForm = () => {
                         }
                       </ListItemSecondaryAction>
                     </ListItem>
-                    <Divider />
+                    <Divider  />
                   </>
                 })
               }

@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { EntryContext } from "../../context/entry/EntryContext";
 import { UiContext } from "../../context/ui/UiContext";
+import ErrorSign from "../ui/ErrorSign";
 
 export const EntryForm = () => {
   const {setDrawerForm, drawerForm, toggleDrawer} = useContext(UiContext)
@@ -78,10 +79,7 @@ export const EntryForm = () => {
         <Grid container spacing={3}>
           <Grid item xs={12} gap="10px" display="flex" alignItems="center">
             <Typography variant="h5">{drawerForm === 'edit' ? 'Edit entry' : 'Create entry'}</Typography>
-            <Box className="fadeIn" display={showError ? "flex" : "none"} mt={1} gap={1} alignItems="center" padding={1} borderRadius={4} bgcolor="red" color="white">
-              <ErrorOutline />
-              <Typography fontWeight={500} >{errorMessage}</Typography>
-            </Box>
+            <ErrorSign showError={showError} errorMessage={errorMessage} />
           </Grid>
           <Grid item xs={12} sm={drawerForm === 'create' ? 12 : 6}>
             <TextField

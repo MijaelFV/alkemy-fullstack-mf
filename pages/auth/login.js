@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { AuthLayout } from '../../components/layouts/AuthLayout'
+import ErrorSign from "../../components/ui/ErrorSign";
 import { AuthContext } from "../../context/auth/AuthContext";
 
 export default function LoginPage() {
@@ -32,10 +33,7 @@ export default function LoginPage() {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Typography variant="h5" component="h5">Sign in to continue</Typography>
-              <Box className="fadeIn" display={showError ? "flex" : "none"} mt={1} gap={1} alignItems="center" padding={1} borderRadius={4} bgcolor="red" color="white">
-                <ErrorOutline />
-                <Typography fontWeight={500} >{errorMessage}</Typography>
-              </Box>
+              <ErrorSign showError={showError} errorMessage={errorMessage} />
             </Grid>
             <Grid item xs={12}>
               <TextField 

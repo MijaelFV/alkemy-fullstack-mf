@@ -12,6 +12,8 @@ const AUTH_INITIAL_STATE = {
     user: undefined,
 }
 
+const defaultErrorRes = 'There was an error - try again';
+
 export const AuthProvider = ({children}) => {
     const [state, dispatch] = useReducer(authReducer, AUTH_INITIAL_STATE)
     const router = useRouter();
@@ -44,17 +46,16 @@ export const AuthProvider = ({children}) => {
         router.replace('/');
         return true;
       } catch (error) {
-        console.log(error.response);
         if (axios.isAxiosError(error)) {
           return {
             hasError: true,
-            message: error.response?.data.msg || error.response?.data.errors[0].msg
+            message: error.response?.data.msg || error.response?.data.errors[0].msg || defaultErrorRes
           }
         }
 
         return {
           hasError: true,
-          message: 'There was an error - try again'
+          message: defaultErrorRes
         }
       }
     }
@@ -74,7 +75,7 @@ export const AuthProvider = ({children}) => {
         if (axios.isAxiosError(error)) {
           return {
             hasError: true,
-            message: error.response?.data.msg || error.response?.data.errors[0].msg
+            message: error.response?.data.msg || error.response?.data.errors[0].msg || defaultErrorRes
           }
         }
 
