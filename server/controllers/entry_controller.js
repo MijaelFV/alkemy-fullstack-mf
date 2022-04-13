@@ -1,4 +1,5 @@
 const { Entry } = require("../models");
+const { Category } = require("../models");
 
 const getEntries = async( req , res ) => {
   const { id } = req.user
@@ -9,32 +10,44 @@ const getEntries = async( req , res ) => {
       where: {
         userId: id
       },
+      attributes: ['id', 'concept', 'amount', 'type', 'date'],
+      include: [
+        {
+          model: Category,
+          attributes: ['name', 'id']
+        }
+      ],
       order: [
-        ['createdAt', 'DESC']
+        ['date', 'DESC']
       ]
     });
     
-    const expenses = Entry.findAll({
-      attributes: ['amount'],
-      where: {type: "expense"}
+    const allEntries = await Entry.findAll({
+      attributes: ['amount', 'type'],
+      where: {
+        userId: id
+      },
     })
+    
     let totalExpenses = 0;
-    (await expenses).forEach((item) => {
-      totalExpenses += item.amount
+    let totalIncomes = 0;
+
+    allEntries.filter(e => e.type === "income")
+      .forEach((item) => {
+        totalIncomes += item.amount
       })
 
-    const incomes = Entry.findAll({
-      attributes: ['amount'],
-      where: {type: "income"}
-    })
-    let totalIncomes = 0;
-    (await incomes).forEach((item) => {
-      totalIncomes += item.amount
+    allEntries.filter(e => e.type === "expense")
+      .forEach((item) => {
+        totalExpenses += item.amount
       })
 
     const balance = totalIncomes - totalExpenses;
 
-    res.status(200).json({entries, balance});
+    res.status(200).json({
+      entries, 
+      balance
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({
