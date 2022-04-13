@@ -9,7 +9,7 @@ export const entryReducer = (state, action) => {
                     entries: action.payload
                 }
 
-        case entryTypes.entrySelected:
+        case entryTypes.entrySelectedLoad:
                 return {
                     ...state,
                     selected: action.payload,
@@ -19,6 +19,12 @@ export const entryReducer = (state, action) => {
                 return {
                     ...state,
                     balance: action.payload,
+                }
+
+        case entryTypes.entryCategoriesLoad:
+                return {
+                    ...state,
+                    categories: action.payload,
                 }
 
         default:

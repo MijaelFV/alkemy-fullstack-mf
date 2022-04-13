@@ -1,14 +1,37 @@
 import { ErrorOutline } from "@mui/icons-material";
 import { Box, Button, Chip, FormControl, Grid, MenuItem, TextField, Typography } from "@mui/material";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { EntryContext } from "../../context/entry/EntryContext";
 import { UiContext } from "../../context/ui/UiContext";
 
 export const EntryForm = () => {
-
-  const { reset, register, handleSubmit, formState: { errors } } = useForm();
-
   const {setDrawerForm, drawerForm, toggleDrawer} = useContext(UiContext)
+  const {selected, categories, createEntry, updateEntry, selectEntry} = useContext(EntryContext)
+  
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const { reset, register, handleSubmit, formState: { errors } } = useForm({
+    concept: '',
+    category: '',
+    amount: '',
+    type: '',
+    date: '',
+  });
+
+  useEffect(() => {
+    if (drawerForm === 'edit') {
+      reset({
+        concept: selected?.concept,
+        category: selected?.category?.id,
+        amount: selected?.amount,
+        type: selected?.type,
+        date: selected?.date,
+      })
+    }
+  }, [selected])
+  
 
   const handleCancel = () => {
     if (drawerForm === "create") {
@@ -19,26 +42,56 @@ export const EntryForm = () => {
     reset()
   }
 
-  const onCreateEntry = async({email, password}) => {
+  const onCreateEntry = async({concept, category, amount, type, date}) => {
+    setShowError(false);
+    const {hasError, message} = await createEntry({concept, category, amount, type, date})
+
+    if (hasError) {
+      setShowError(true);
+      setErrorMessage(message)
+      return;
+    } 
     
+    toggleDrawer()
+    setDrawerForm('none')
+    reset()
   }
 
-  const onEditEntry = async({email, password}) => {
+  const onEditEntry = async({concept, category, amount, date}) => {
+    setShowError(false);
+    const {hasError, message} = await updateEntry({id: selected.id, concept, category, amount, date, lastAmount: selected.amount})
 
+    if (hasError) {
+      setShowError(true);
+      setErrorMessage(message)
+      return;
+    } 
+
+    toggleDrawer()
+    selectEntry(null)
+    reset()
   }
 
   return (
-    <form onSubmit={handleSubmit(onCreateEntry)}>
+    <form onSubmit={handleSubmit(drawerForm === "create" ? onCreateEntry : onEditEntry)}>
       <Box className="fadeIn" sx={{mx:"5px", my: "20px"}}>
         <Grid container spacing={3}>
           <Grid item xs={12} gap="10px" display="flex" alignItems="center">
             <Typography variant="h5">{drawerForm === 'edit' ? 'Edit entry' : 'Create entry'}</Typography>
+            <Chip
+              label={errorMessage}
+              color="error"
+              icon={<ErrorOutline />}
+              className="fadeIn"
+              sx={{display: showError ? 'flex' : 'none', mt: 1}}
+            />
           </Grid>
           <Grid item xs={12} sm={drawerForm === 'create' ? 12 : 6}>
             <TextField
               type="text"
               label="Concept" 
               variant="filled" 
+              InputLabelProps={{ shrink: true }}
               fullWidth
               {
                 ...register('concept', {
@@ -56,13 +109,17 @@ export const EntryForm = () => {
                 select
                 variant="filled"
                 label="Category"
-                defaultValue={1}
+                defaultValue={categories[0].id}
                 {...register('category', {
                     required: 'the category is required',
                 })}
                 error={!!errors.category}
               >
-                  <MenuItem value={1}>Gustitos</MenuItem>
+                {
+                  categories.map(c => (
+                    <MenuItem key={c.id} value={c.id}>{c.name}</MenuItem>
+                  ))
+                }
               </TextField>
             </FormControl>
           </Grid>
@@ -72,6 +129,7 @@ export const EntryForm = () => {
               label="Amount" 
               variant="filled" 
               fullWidth
+              InputLabelProps={{ shrink: true }}
               {...register('amount', {
                 required: 'The amount is required',
                 min: {value: 0, message: 'The minimum value is 0'}
@@ -126,7 +184,11 @@ export const EntryForm = () => {
           </Grid>
           <Grid item xs={6} sm={3}>
             <Button type="submit" color="secondary" className="circular-btn" size="large" fullWidth>
-              Save
+              {
+                drawerForm === "create"
+                ? 'Create'
+                : 'Save'
+              }
             </Button>
           </Grid>
         </Grid>
