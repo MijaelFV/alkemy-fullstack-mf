@@ -114,8 +114,8 @@ export const CategoryForm = () => {
           <Box border={3} borderColor="#e5e5e5" borderRadius={2} overflow={'auto'} height="260px">
             <List>
               {
-                categories.map((c) => {
-                  return <>
+                categories.map((c, i) => {
+                  return [
                     <ListItem key={c.id + c.name} button>
                       {
                         editMode === c.id
@@ -160,9 +160,9 @@ export const CategoryForm = () => {
                           )
                         }
                       </ListItemSecondaryAction>
-                    </ListItem>
-                    <Divider  />
-                  </>
+                    </ListItem>,
+                    <Divider key={c.id + c.name + i} />
+                  ]
                 })
               }
             </List>
