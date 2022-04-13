@@ -62,7 +62,6 @@ export const AuthProvider = ({children}) => {
     const registerUser = async(name, email, password, password2) => {
       try {
         const {data} = await financeApi.post('/user', {name, email, password, password2}, {withCredentials: false});
-        console.log(data);
         const {token, user} = data;
         Cookies.set('token', token);
 
