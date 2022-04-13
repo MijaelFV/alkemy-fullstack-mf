@@ -12,7 +12,7 @@ const validateUser = (req, res, next) => {
       })
     }
 
-    if (userIdToken != useridRequest) {
+    if (userIdToken != userIdRequest) {
         return res.status(401).json({
             msg: 'You are not allowed'
         })
