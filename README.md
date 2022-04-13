@@ -13,6 +13,9 @@ npm install
 npm start
 ```
 
+__For API details you can visit the next link__
+[API Documentation](https://documenter.getpostman.com/view/11898595/UVyxRtwT) 
+
 ## Server configuration
 All necessary configuration is already set by default.
 
