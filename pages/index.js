@@ -1,5 +1,5 @@
 import AddIcon from '@mui/icons-material/Add';
-import { Box, IconButton, Card, CardContent, Fab, Grid, Typography, MenuItem, ListItemIcon, MenuList, ListItemText } from "@mui/material"
+import { Box, IconButton, Card, CardContent, Fab, Grid, Typography} from "@mui/material"
 import { format } from "../utils/currency"
 import { EntryList } from "../components/balance/EntryList"
 import { MainLayout } from "../components/layouts/MainLayout";
@@ -30,7 +30,7 @@ export default function HomePage(data) {
   useEffect(() => {
     loadEntries(data.entries)  
     loadBalance(data.balance)
-  }, [])
+  }, [data, loadBalance, loadEntries])
   
 
   return (

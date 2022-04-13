@@ -1,5 +1,4 @@
-import { ErrorOutline, ErrorOutlineOutlined } from '@mui/icons-material';
-import { Box, Button, Chip, Grid, Link, TextField, Typography } from '@mui/material'
+import { Box, Button, Grid, Link, TextField, Typography } from '@mui/material'
 import NextLink from 'next/link'
 import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form';
@@ -8,7 +7,7 @@ import ErrorSign from "../../components/ui/ErrorSign";
 import { AuthContext } from "../../context/auth/AuthContext";
 
 export default function RegisterPage() {
-  const {registerUser, loginUser} = useContext(AuthContext);
+  const {registerUser} = useContext(AuthContext);
 
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [showError, setShowError] = useState(false);

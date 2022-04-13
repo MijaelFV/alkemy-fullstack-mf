@@ -1,5 +1,5 @@
 import { Refresh } from "@mui/icons-material"
-import { Box, Grid, IconButton, Typography, List, ListItem } from "@mui/material"
+import { Box, Grid, IconButton, Typography } from "@mui/material"
 import { useContext } from "react"
 import { EntryContext } from "../../context/entry/EntryContext"
 import { EntryCard } from "./EntryCard"

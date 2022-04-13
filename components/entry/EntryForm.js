@@ -1,5 +1,4 @@
-import { ErrorOutline } from "@mui/icons-material";
-import { Box, Button, Chip, FormControl, Grid, MenuItem, TextField, Typography } from "@mui/material";
+import { Box, Button, FormControl, Grid, MenuItem, TextField, Typography } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { EntryContext } from "../../context/entry/EntryContext";
@@ -31,7 +30,7 @@ export const EntryForm = () => {
         date: selected?.date,
       })
     }
-  }, [selected])
+  }, [selected, drawerForm, reset])
   
 
   const handleCancel = () => {

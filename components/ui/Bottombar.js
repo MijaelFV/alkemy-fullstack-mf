@@ -1,5 +1,5 @@
 import { Drawer, IconButton } from "@mui/material"
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import { EntryForm } from "../entry/EntryForm";
 import { UiContext } from "../../context/ui/UiContext";
 import { EntryInfo } from "../entry/EntryInfo";

@@ -1,7 +1,5 @@
-import { ErrorOutline } from '@mui/icons-material';
-import { Box, Button, Chip, Grid, Link, TextField, Typography } from '@mui/material'
+import { Box, Button, Grid, Link, TextField, Typography } from '@mui/material'
 import NextLink from 'next/link'
-import { useRouter } from "next/router";
 import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { AuthLayout } from '../../components/layouts/AuthLayout'
@@ -71,7 +69,7 @@ export default function LoginPage() {
             <Grid item xs={12} display='flex' justifyContent='end'>
               <NextLink href={`/auth/register`} passHref>
                 <Link underline="always">
-                  Don't have an account?
+                  Do not have an account?
                 </Link>
               </NextLink>
             </Grid>

@@ -1,5 +1,5 @@
-import { Check, Close, DeleteForever, Edit, EditOff, ErrorOutline, Refresh } from "@mui/icons-material";
-import { Box, Button, Chip, Divider, FormControl, Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, MenuItem, TextField, Typography } from "@mui/material";
+import { Check, Close, DeleteForever, Edit, Refresh } from "@mui/icons-material";
+import { Box, Button, Divider, Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, TextField, Typography } from "@mui/material";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { EntryContext } from "../../context/entry/EntryContext";
@@ -8,7 +8,7 @@ import ErrorSign from "../ui/ErrorSign";
 
 export const CategoryForm = () => {
 
-  const { reset, register, handleSubmit, getValues, formState: { errors } } = useForm();
+  const { reset, register, getValues, formState: { errors } } = useForm();
 
   const [editMode, setEditMode] = useState(null)
   const [showError, setShowError] = useState(false);
