@@ -13,6 +13,15 @@ router.get('/:id',[
 
 router.put('/:id',[
   validateJwt,
+  check('name', 'Name is required')
+    .notEmpty(),
+  check('email', 'Email must be valid')
+    .isEmail()
+    .toLowerCase(),
+  check('email')
+    .custom(isEmailAvailable),
+  body('password')
+    .custom((v, {req}) => isPasswordValid(req.body)),
   validateUser,
 ], userController.putUser);
 

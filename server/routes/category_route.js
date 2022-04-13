@@ -11,7 +11,9 @@ router.get('/',[
 
 router.put('/:id',[
   validateJwt,
-  validateCategory,
+  check('name', 'Name is required')
+    .not().isEmpty(),
+  validateFields
 ], categoryController.putCategory);
 
 router.post('/',[
