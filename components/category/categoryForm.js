@@ -62,7 +62,7 @@ export const CategoryForm = () => {
     setEditMode(null)
   }
 
-  const handleEditMode = (id) => {
+  const handleEditMode = (id, name) => {
     if (editMode === id || null === id ) {
       reset({
         newCategory: getValues('newCategory'),
@@ -71,6 +71,10 @@ export const CategoryForm = () => {
       return setEditMode(null);
     }
 
+    reset({
+      newCategory: getValues('newCategory'),
+      newName: name
+    })
     setEditMode(id)
   }
 
@@ -149,7 +153,7 @@ export const CategoryForm = () => {
                           )
                           : (
                             <>
-                              <IconButton onClick={() => handleEditMode(c.id)} color="primary">
+                              <IconButton onClick={() => handleEditMode(c.id, c.name)} color="primary">
                                 <Edit sx={{height: 30, width: 30}} />
                               </IconButton>
                               <IconButton onClick={() => handleDeleteCategory(c.id)} color="error">
