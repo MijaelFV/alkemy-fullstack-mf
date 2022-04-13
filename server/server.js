@@ -46,13 +46,10 @@ class Server {
 
   middlewares() {
     // Cors
-    this.app.use(cors());
-
-    this.app.use((req, res, next) => {
-      res.setHeader('Access-Control-Allow-Origin', process.env.WEB_URL || 'http://localhost:3000');
-      res.setHeader('Access-Control-Allow-Credentials', true);
-      next();
-    })
+    this.app.use(cors({
+      origin: process.env.WEB_URL || 'http://localhost:3000',
+      credentials: true
+    }));
     
     // Reading and parsing of body
     this.app.use(express.json());
