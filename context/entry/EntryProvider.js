@@ -6,9 +6,10 @@ import { entryReducer } from "./entryReducer";
 import financeApi from "../../api/financeApi";
 import axios from "axios";
 
-const AUTH_INITIAL_STATE = {
+const ENTRY_INITIAL_STATE = {
     entries: [],
     balance: 0,
+    categories: [],
     selected: {
       concept: '',
       Category: '',
@@ -21,7 +22,7 @@ const AUTH_INITIAL_STATE = {
 const defaultErrorRes = 'There was an error - try again';
 
 export const EntryProvider = ({children}) => {
-    const [state, dispatch] = useReducer(entryReducer, AUTH_INITIAL_STATE)
+    const [state, dispatch] = useReducer(entryReducer, ENTRY_INITIAL_STATE)
 
     useEffect(() => {
       refreshCategories()
@@ -36,7 +37,7 @@ export const EntryProvider = ({children}) => {
         const {data} = await financeApi.get('/category')
         dispatch({type: entryTypes.entryCategoriesLoad, payload: data})
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
 
@@ -165,7 +166,7 @@ export const EntryProvider = ({children}) => {
         dispatch({type: entryTypes.entryLoad, payload: data.entries})
         dispatch({type: entryTypes.entryBalanceLoad, payload: data.balance})
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     } 
 
@@ -284,7 +285,7 @@ export const EntryProvider = ({children}) => {
           dispatch({type: entryTypes.entryBalanceLoad, payload: Number(state.balance) + Number(state.selected.amount)})  
         }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
 

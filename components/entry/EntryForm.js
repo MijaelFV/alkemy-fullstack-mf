@@ -103,7 +103,7 @@ export const EntryForm = () => {
                 select
                 variant="filled"
                 label="Category"
-                defaultValue={categories[0].id}
+                defaultValue={categories[0]?.id}
                 {...register('category', {
                     required: 'the category is required',
                 })}
