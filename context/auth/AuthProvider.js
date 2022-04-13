@@ -48,7 +48,7 @@ export const AuthProvider = ({children}) => {
         if (axios.isAxiosError(error)) {
           return {
             hasError: true,
-            message: error.response?.data.msg
+            message: error.response?.data.msg || error.response?.data.errors[0].msg
           }
         }
 
