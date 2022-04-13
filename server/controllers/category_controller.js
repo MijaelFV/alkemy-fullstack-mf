@@ -7,7 +7,8 @@ const getAllCategories = async( req , res ) => {
     const categories = await Category.findAll({
       where: {
         userId: id
-      }
+      },
+      attributes: ['id', 'name']
     });
 
     res.status(200).json(categories);
