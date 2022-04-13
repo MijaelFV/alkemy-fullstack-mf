@@ -48,7 +48,7 @@ export default function HomePage(data) {
             </IconButton>
             <MainMenu />
           </Box>
-          <Card sx={{bgcolor:"#fd751a", color:"white"}}>
+          <Card sx={{background:"linear-gradient(180deg, rgba(253,117,26,1) 31%, rgba(233,95,0,1) 100%)", color:"white"}}>
             <CardContent sx={{display: "flex", flexDirection: "column", justifyContent:"center", alignItems:"center"}}>
               <Typography variant="h6">Balance</Typography>
               <Typography variant="h3" className="fadeIn">{format(balance)}</Typography>
