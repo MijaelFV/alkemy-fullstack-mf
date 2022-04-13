@@ -1,4 +1,5 @@
 import { useEffect, useReducer } from 'react';
+import Swal from 'sweetalert2'
 import { entryTypes } from "./entryTypes";
 import { EntryContext } from "./EntryContext";
 import { entryReducer } from "./entryReducer";
@@ -16,6 +17,8 @@ const AUTH_INITIAL_STATE = {
       type: ''
     }
 }
+
+const defaultErrorRes = 'There was an error - try again';
 
 export const EntryProvider = ({children}) => {
     const [state, dispatch] = useReducer(entryReducer, AUTH_INITIAL_STATE)
@@ -58,7 +61,7 @@ export const EntryProvider = ({children}) => {
         if (axios.isAxiosError(error)) {
           return {
             hasError: true,
-            message: error.response?.data.msg || error.response?.data.errors[0].msg
+            message: error.response?.data.msg || error.response?.data.errors[0].msg || defaultErrorRes
           }
         }
 
@@ -90,18 +93,34 @@ export const EntryProvider = ({children}) => {
         if (axios.isAxiosError(error)) {
           return {
             hasError: true,
-            message: error.response?.data.msg || error.response?.data.errors[0].msg
+            message: error.response?.data.msg || error.response?.data.errors[0].msg || defaultErrorRes
           }
         }
 
         return {
           hasError: true,
-          message: 'There was an error - try again'
+          message: defaultErrorRes
         }
       }
     }
 
     const deleteCategory = async(id) => {
+
+      const isConfirmed = await Swal.fire({
+        text: "Are you sure you want to delete this category? This will delete all entries that use it",
+        icon: 'warning',
+        iconColor: "red",
+        showCancelButton: true,
+        confirmButtonText: "Delete",
+        confirmButtonColor: "red",
+        customClass: {
+          container: 'swal2-container'
+        }
+      }).then((result) => {
+        return result.isConfirmed
+      })
+      if (!isConfirmed) return {hasError: false};
+
       try {
         await financeApi.delete(`/category/${id}`)
     
@@ -115,13 +134,13 @@ export const EntryProvider = ({children}) => {
         if (axios.isAxiosError(error)) {
           return {
             hasError: true,
-            message: error.response?.data.msg || error.response?.data.errors[0].msg
+            message: error.response?.data.msg || error.response?.data.errors[0].msg || defaultErrorRes
           }
         }
 
         return {
           hasError: true,
-          message: 'There was an error - try again'
+          message: defaultErrorRes
         }
       }
     }
@@ -148,7 +167,7 @@ export const EntryProvider = ({children}) => {
       } catch (error) {
         console.log(error);
       }
-    }
+    } 
 
     const createEntry = async(data) => {
       try {
@@ -183,7 +202,7 @@ export const EntryProvider = ({children}) => {
         if (axios.isAxiosError(error)) {
           return {
             hasError: true,
-            message: error.response?.data.msg || error.response?.data.errors[0].msg
+            message: error.response?.data.msg || error.response?.data.errors[0].msg || defaultErrorRes
           }
         }
 
@@ -227,18 +246,33 @@ export const EntryProvider = ({children}) => {
         if (axios.isAxiosError(error)) {
           return {
             hasError: true,
-            message: error.response?.data.msg || error.response?.data.errors[0].msg
+            message: error.response?.data.msg || error.response?.data.errors[0].msg || defaultErrorRes
           }
         }
 
         return {
           hasError: true,
-          message: 'There was an error - try again'
+          message: defaultErrorRes
         }
       }
     }
 
     const deleteEntry = async() => {
+      const isConfirmed = await Swal.fire({
+        text: "Are you sure you want to delete this entry?",
+        icon: 'warning',
+        iconColor: "red",
+        showCancelButton: true,
+        confirmButtonText: "Delete",
+        confirmButtonColor: "red",
+        customClass: {
+          container: 'swal2-container'
+        }
+      }).then((result) => {
+        return result.isConfirmed
+      })
+      if (!isConfirmed) return {hasError: false};
+
       try {
         await financeApi.delete(`/entry/${state.selected.id}`, {withCredentials: true})
         const payload = state.entries.filter(e => e.id !== state.selected.id)

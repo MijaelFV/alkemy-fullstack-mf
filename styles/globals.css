@@ -34,3 +34,7 @@ a {
   -webkit-animation-name: fadeIn;
   animation-name: fadeIn;
 }
+
+.swal2-container {
+  z-index: 9000!important;
+}
