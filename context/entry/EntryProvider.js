@@ -125,8 +125,21 @@ export const EntryProvider = ({children}) => {
       try {
         await financeApi.delete(`/category/${id}`)
     
-        const payload = state.categories.filter(c => c.id !== id)
-        dispatch({type: entryTypes.entryCategoriesLoad, payload})
+        const payloadCategories = state.categories.filter(c => c.id !== id)
+        dispatch({type: entryTypes.entryCategoriesLoad, payload: payloadCategories})
+
+        const payloadEntries = state.entries.filter(e => e.Category?.id !== id)
+        dispatch({type: entryTypes.entryLoad, payload: payloadEntries})
+
+        state.entries.forEach(e => {
+          if (e.Category?.id === id) {
+            if (e.type === "income") {
+              dispatch({type: entryTypes.entryBalanceLoad, payload: Number(state.balance) - Number(e.amount)})  
+            } else {
+              dispatch({type: entryTypes.entryBalanceLoad, payload: Number(state.balance) + Number(e.amount)})  
+            }
+          }
+        })
 
         return {
           hasError: false
@@ -232,7 +245,7 @@ export const EntryProvider = ({children}) => {
             }
           }
         ]
-
+        
         dispatch({type: entryTypes.entryLoad, payload})
         if (entry.type === "income") {
           dispatch({type: entryTypes.entryBalanceLoad, payload: (Number(state.balance) - Number(data.lastAmount)) + Number(entry.amount)})  
