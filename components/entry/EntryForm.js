@@ -78,13 +78,10 @@ export const EntryForm = () => {
         <Grid container spacing={3}>
           <Grid item xs={12} gap="10px" display="flex" alignItems="center">
             <Typography variant="h5">{drawerForm === 'edit' ? 'Edit entry' : 'Create entry'}</Typography>
-            <Chip
-              label={errorMessage}
-              color="error"
-              icon={<ErrorOutline />}
-              className="fadeIn"
-              sx={{display: showError ? 'flex' : 'none', mt: 1}}
-            />
+            <Box className="fadeIn" display={showError ? "flex" : "none"} mt={1} gap={1} alignItems="center" padding={1} borderRadius={4} bgcolor="red" color="white">
+              <ErrorOutline />
+              <Typography fontWeight={500} >{errorMessage}</Typography>
+            </Box>
           </Grid>
           <Grid item xs={12} sm={drawerForm === 'create' ? 12 : 6}>
             <TextField

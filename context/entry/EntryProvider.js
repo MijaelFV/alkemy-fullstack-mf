@@ -23,18 +23,9 @@ export const EntryProvider = ({children}) => {
     useEffect(() => {
       refreshCategories()
     }, [])
-    
 
-    const loadEntries = (data) => {
-      dispatch({type: entryTypes.entryLoad, payload: data})
-    }
-
-    const loadBalance = (data) => {
-      dispatch({type: entryTypes.entryBalanceLoad, payload: data})
-    }
-
-    const selectEntry = (data) => {
-      dispatch({type: entryTypes.entrySelectedLoad, payload: data})
+    const loadCategories = (data) => {
+      dispatch({type: entryTypes.entryCategoriesLoad, payload: data})
     }
 
     const refreshCategories = async() => {
@@ -46,8 +37,107 @@ export const EntryProvider = ({children}) => {
       }
     }
 
-    const loadCategories = (data) => {
-      dispatch({type: entryTypes.entryCategoriesLoad, payload: data})
+    const createCategory = async(name) => {
+      try {
+        const {data: category} = await financeApi.post(`/category`, {name})
+    
+        const payload = [
+          ...state.categories,
+          {
+            id: category.id,
+            name: category.name
+          }
+        ]
+
+        dispatch({type: entryTypes.entryCategoriesLoad, payload})
+
+        return {
+          hasError: false
+        }
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          return {
+            hasError: true,
+            message: error.response?.data.msg || error.response?.data.errors[0].msg
+          }
+        }
+
+        return {
+          hasError: true,
+          message: 'The category could not be created - try again'
+        }
+      }
+    }
+
+    const updateCategory = async(id, name) => {
+      try {
+        const {data: category} = await financeApi.put(`/category/${id}`, {name})
+    
+        const payload = [
+          ...state.categories.filter(c => c.id !== id),
+          {
+            id: category.id,
+            name: category.name
+          }
+        ]
+
+        dispatch({type: entryTypes.entryCategoriesLoad, payload})
+
+        return {
+          hasError: false
+        }
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          return {
+            hasError: true,
+            message: error.response?.data.msg || error.response?.data.errors[0].msg
+          }
+        }
+
+        return {
+          hasError: true,
+          message: 'There was an error - try again'
+        }
+      }
+    }
+
+    const deleteCategory = async(id) => {
+      try {
+        await financeApi.delete(`/category/${id}`)
+    
+        const payload = state.categories.filter(c => c.id !== id)
+        dispatch({type: entryTypes.entryCategoriesLoad, payload})
+
+        return {
+          hasError: false
+        }
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          return {
+            hasError: true,
+            message: error.response?.data.msg || error.response?.data.errors[0].msg
+          }
+        }
+
+        return {
+          hasError: true,
+          message: 'There was an error - try again'
+        }
+      }
+    }
+    
+
+    const loadBalance = (data) => {
+      dispatch({type: entryTypes.entryBalanceLoad, payload: data})
+    }
+
+
+    const loadEntries = (data) => {
+      dispatch({type: entryTypes.entryLoad, payload: data})
+    }
+
+    const selectEntry = (data) => {
+      dispatch({type: entryTypes.entrySelectedLoad, payload: data})
     }
 
     const refreshEntries = async() => {
@@ -93,7 +183,7 @@ export const EntryProvider = ({children}) => {
         if (axios.isAxiosError(error)) {
           return {
             hasError: true,
-            message: error.response?.data.msg
+            message: error.response?.data.msg || error.response?.data.errors[0].msg
           }
         }
 
@@ -137,7 +227,7 @@ export const EntryProvider = ({children}) => {
         if (axios.isAxiosError(error)) {
           return {
             hasError: true,
-            message: error.response?.data.msg
+            message: error.response?.data.msg || error.response?.data.errors[0].msg
           }
         }
 
@@ -167,14 +257,18 @@ export const EntryProvider = ({children}) => {
     return (
     <EntryContext.Provider value={{
         ...state,
-        selectEntry,
-        loadEntries,
         loadBalance,
-        deleteEntry,
+        loadEntries,
         refreshEntries,
-        loadCategories,
+        selectEntry,
+        createEntry,
         updateEntry,
-        createEntry
+        deleteEntry,
+        loadCategories,
+        refreshCategories,
+        createCategory,
+        updateCategory,
+        deleteCategory
     }}>
         {children}
     </EntryContext.Provider>
