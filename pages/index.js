@@ -16,7 +16,7 @@ export default function HomePage(data) {
 
   const {toggleDrawer, setDrawerForm, toggleMenu} = useContext(UiContext)
   const {user = ''} = useContext(AuthContext)
-  const {entries, balance, loadEntries, loadBalance} = useContext(EntryContext)
+  const {balance, loadEntries, loadBalance} = useContext(EntryContext)
 
   const handleOpenCreateEntry = () => {
     setDrawerForm('create')
@@ -30,8 +30,7 @@ export default function HomePage(data) {
   useEffect(() => {
     loadEntries(data.entries)  
     loadBalance(data.balance)
-  }, [data, loadBalance, loadEntries])
-  
+  }, [])
 
   return (
     <MainLayout title='Balance'>
@@ -54,7 +53,7 @@ export default function HomePage(data) {
               <Typography variant="h3" className="fadeIn">{format(balance)}</Typography>
             </CardContent>
           </Card>
-          <EntryList entries={entries} />
+          <EntryList/>
           <Fab onClick={handleOpenCreateEntry} sx={{position: 'fixed', bottom: 16, right: 16}} color="secondary">
             <AddIcon />
           </Fab>
@@ -85,7 +84,7 @@ export const getServerSideProps = async ({req}) => {
     })
     return {
       props: {
-        entries: data.entries || 0,
+        entries: data.entries || [],
         balance: data.balance || 0
       }
     }

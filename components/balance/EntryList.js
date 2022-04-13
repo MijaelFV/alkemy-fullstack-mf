@@ -5,9 +5,9 @@ import { EntryContext } from "../../context/entry/EntryContext"
 import { EntryCard } from "./EntryCard"
 import AddCircle from '@mui/icons-material/AddCircle';
 
-export const EntryList = ({entries}) => {
+export const EntryList = () => {
 
-  const {refreshEntries} = useContext(EntryContext)
+  const {refreshEntries, entries} = useContext(EntryContext)
 
   const sorting = (a, b) => {
     if (a.date > b.date) {
@@ -31,9 +31,9 @@ export const EntryList = ({entries}) => {
           </IconButton>
         </Grid>
       {
-          entries.length > 0
+          entries?.length > 0
           ? (
-            entries.sort((a,b) => sorting(a, b)).map(entry => (
+            entries?.sort((a,b) => sorting(a, b)).map(entry => (
                 <EntryCard key={entry.id} entry={entry} />
             ))
           )
