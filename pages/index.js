@@ -10,11 +10,13 @@ import { MainMenu } from "../components/ui/MainMenu";
 import { UiContext } from "../context/ui/UiContext";
 import financeApi from "../api/financeApi";
 import { AuthContext } from "../context/auth/AuthContext";
+import { EntryContext } from "../context/entry/EntryContext";
 
-export default function HomePage({entries = [], balance = 0}) {
+export default function HomePage(data) {
 
   const {toggleDrawer, setDrawerForm, toggleMenu} = useContext(UiContext)
   const {user = ''} = useContext(AuthContext)
+  const {entries, balance, loadEntries, loadBalance} = useContext(EntryContext)
 
   const handleOpenCreateEntry = () => {
     setDrawerForm('create')
@@ -24,6 +26,12 @@ export default function HomePage({entries = [], balance = 0}) {
   const handleOpenMenu = (event) => {
     toggleMenu(event.currentTarget)
   }
+
+  useEffect(() => {
+    loadEntries(data.entries)  
+    loadBalance(data.balance)
+  }, [])
+  
 
   return (
     <MainLayout title='Balance'>
@@ -69,16 +77,25 @@ export const getServerSideProps = async ({req}) => {
     }
   }
 
-  const {data} = await financeApi.get('/entry', {
-    headers: {
-      Cookie: `token=${token};`
+  try {
+    const {data} = await financeApi.get('/entry', {
+      headers: {
+        Cookie: `token=${token};`
+      }
+    })
+    return {
+      props: {
+        entries: data.entries || 0,
+        balance: data.balance || 0
+      }
     }
-  })
-
-  return {
-    props: {
-      entries: data.entries,
-      balance: data.balance
+  } catch (error) {
+    return {
+      redirect: {
+        destination: '/auth/login',
+        permanent: false,
+      }
     }
   }
+
 }

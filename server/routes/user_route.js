@@ -17,10 +17,15 @@ router.put('/:id',[
 ], userController.putUser);
 
 router.post('/',[
-  check('name', 'Name is required').notEmpty().toLowerCase(),
-  check('email', 'Email must be valid').isEmail(),
-  check('email').custom(isEmailAvailable),
-  body('password').custom((v, {req}) => isPasswordValid(req.body)),
+  check('name', 'Name is required')
+    .notEmpty(),
+  check('email', 'Email must be valid')
+    .isEmail()
+    .toLowerCase(),
+  check('email')
+    .custom(isEmailAvailable),
+  body('password')
+    .custom((v, {req}) => isPasswordValid(req.body)),
   validateFields
 ], userController.postUser);
 
