@@ -13,6 +13,10 @@ const Entry = db.define('Entry', {
   type: {
     type: DataTypes.STRING,
     allowNull: false,
+  },
+  date: {
+    type: DataTypes.DATEONLY,
+    allowNull: false,
   }
 });
 

@@ -21,7 +21,7 @@ const getEntries = async( req , res ) => {
     let totalExpenses = 0;
     (await expenses).forEach((item) => {
       totalExpenses += item.amount
-    })
+      })
 
     const incomes = Entry.findAll({
       attributes: ['amount'],
@@ -30,7 +30,7 @@ const getEntries = async( req , res ) => {
     let totalIncomes = 0;
     (await incomes).forEach((item) => {
       totalIncomes += item.amount
-    })
+      })
 
     const balance = totalIncomes - totalExpenses;
 
@@ -60,10 +60,10 @@ const getEntry = async( req , res ) => {
 
 const postEntry = async( req , res ) => {
   const { id } = req.user
-  const { concept, amount, type, category } = req.body;
+  const { concept, amount, type, category, date } = req.body;
 
   try {
-    const entry = Entry.build({concept, amount, type, categoryId: category, userId: id});
+    const entry = Entry.build({concept, amount, type, date, categoryId: category, userId: id});
     await entry.save();
     
     res.status(201).json( entry );
@@ -77,7 +77,7 @@ const postEntry = async( req , res ) => {
 
 const putEntry = async( req , res ) => {
   const { id }   = req.params;
-  const { concept, amount, category } = req.body;
+  const { concept, amount, category, date } = req.body;
 
   try {
     const entry = await Entry.findByPk( id );
@@ -85,7 +85,8 @@ const putEntry = async( req , res ) => {
     const data = {
       concept: concept || entry.concept,
       amount: amount || entry.amount,
-      categoryId: category || entry.categoryId
+      categoryId: category || entry.categoryId,
+      date: date || entry.date
     }
 
     await entry.update(data);

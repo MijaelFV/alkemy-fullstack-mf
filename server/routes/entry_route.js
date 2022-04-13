@@ -32,6 +32,9 @@ router.post('/',[
     .isIn(['income', 'expense']).withMessage('The entry must be an income or an expense'),
   check('category')
     .not().isEmpty().withMessage('Category is required'),
+  check('date')
+    .not().isEmpty().withMessage('Date is required')
+    .isDate().withMessage('Must be a valid date'),
   validateFields
 ], entryController.postEntry);
 
