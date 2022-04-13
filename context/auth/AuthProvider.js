@@ -31,7 +31,7 @@ export const AuthProvider = ({children}) => {
         Cookies.set('token', token);
         dispatch({type: authTypes.authLogin, payload: name});
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         Cookies.remove('token')
       }
     }
