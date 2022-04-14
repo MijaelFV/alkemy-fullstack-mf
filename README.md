@@ -1,11 +1,14 @@
 Hello :D! welcome to this Project which features a Personal Finance APP.    
-This front-end and back-end was created to complete a full-stack-js challenge in [Alkemy](https://www.alkemy.org/) 
+This front-end and back-end was created to complete a full-stack-js challenge in [Alkemy](https://www.alkemy.org/).  
+
+[Challenge instructions](https://drive.google.com/file/d/1xR92xRBg8uQDbdajch0sVb9xa4VtHXtU/view?pli=1)
 
 __Relevant dependencies that I used:__    
 -ReactJS    
 -NextJS   
 -MaterialUI   
 -SweetAlert2  
+-React Hook Form
 -Express    
 -Axios    
 -Sequelize
