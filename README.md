@@ -1,3 +1,15 @@
+Hello :D! welcome to this Project which features a Personal Finance APP.    
+This front-end and back-end was created to complete a full-stack-js challenge in [Alkemy](https://www.alkemy.org/) 
+
+__Relevant dependencies that I used:__    
+-ReactJS    
+-NextJS   
+-MaterialUI   
+-SweetAlert2  
+-Express    
+-Axios    
+-Sequelize
+
 # Finance-App Backend
 First, to run locally, is needed a `MariaDB` database.
 
