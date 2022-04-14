@@ -69,5 +69,5 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 This is the __default__ webapp config:
 ```
-FINANCE_APP_API_URL=http://localhost:3000
+FINANCE_APP_API_URL=http://localhost:8080
 ```
