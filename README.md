@@ -8,7 +8,7 @@ __Relevant dependencies that I used:__
 -NextJS   
 -MaterialUI   
 -SweetAlert2  
--React Hook Form
+-React Hook Form    
 -Express    
 -Axios    
 -Sequelize
