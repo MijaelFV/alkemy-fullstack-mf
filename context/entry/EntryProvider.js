@@ -130,9 +130,10 @@ export const EntryProvider = ({children}) => {
 
         const payloadEntries = state.entries.filter(e => e.Category?.id !== id)
         dispatch({type: entryTypes.entryLoad, payload: payloadEntries})
-
+        
+        
         state.entries.forEach(e => {
-          if (e.Category?.id === id) {
+          if (e.Category?.id == id) {
             if (e.type === "income") {
               dispatch({type: entryTypes.entryBalanceLoad, payload: Number(state.balance) - Number(e.amount)})  
             } else {
